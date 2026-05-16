@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
@@ -12,12 +12,15 @@ function renderApp(path = '/') {
 }
 
 describe('NexFolio app', () => {
-  it('renders home hero and primary entries', () => {
+  it('renders home hero and primary entries with local fallback data', async () => {
     renderApp('/');
 
     expect(screen.getByRole('heading', { name: '个人数字平台' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: '探索我的项目' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: '阅读我的博客' })).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByText(/正在读取项目内容/)).not.toBeInTheDocument();
+    });
   });
 
   it('filters blog posts by search keyword', async () => {
@@ -30,14 +33,29 @@ describe('NexFolio app', () => {
     expect(screen.queryByText('从工具集合到个人数字平台')).not.toBeInTheDocument();
   });
 
-  it('renders richer project detail route', () => {
+  it('renders richer project detail route from fallback data', async () => {
     renderApp('/projects/nexfolio');
 
-    expect(screen.getByRole('heading', { name: 'NexFolio 个人数字平台' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'NexFolio 个人数字平台' })).toBeInTheDocument();
     expect(screen.getByText('项目背景')).toBeInTheDocument();
     expect(screen.getByText('为什么做')).toBeInTheDocument();
     expect(screen.getByText('解决什么问题')).toBeInTheDocument();
     expect(screen.getByText('访问链接状态')).toBeInTheDocument();
+  });
+
+  it('shows Supabase configuration guidance on studio login when env is missing', () => {
+    renderApp('/studio/login');
+
+    expect(screen.getByRole('heading', { name: 'Supabase 未配置' })).toBeInTheDocument();
+    expect(screen.getByText(/VITE_SUPABASE_URL/)).toBeInTheDocument();
+  });
+
+  it('redirects protected studio routes to login while Supabase is not configured', async () => {
+    renderApp('/studio');
+
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: 'Supabase 未配置' })).toBeInTheDocument();
+    });
   });
 
   it('renders graceful 404 for unknown routes', () => {

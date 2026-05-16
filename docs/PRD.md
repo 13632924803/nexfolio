@@ -688,3 +688,28 @@ personal-digital-platform/
 3. 项目站：当项目作品数量较多、需要案例库体验时拆分。
 
 长期架构预留只写入文档，不在当前阶段开发。
+
+---
+
+## 19. 第二阶段实现补充：Supabase Studio 轻后台
+
+第二阶段实现遵守原规划，只做单站主轻量后台，不引入多用户社区、评论、支付、Storage、Realtime、Edge Function 或独立子站拆分。
+
+已实现范围：
+
+- 前台内容读取层优先读取 Supabase 中 `is_published = true` 的 `posts`、`projects`、`tools`。
+- 当 Supabase 未配置、请求失败或数据为空时，前台自动回退到当前本地 TypeScript 数据，保证线上展示不白屏。
+- `/studio/login` 支持 Supabase Auth 邮箱密码登录；未配置 Supabase 时显示清晰提示。
+- `/studio` 下页面需要登录访问；未登录访问会跳转到 `/studio/login`。
+- Studio 包含概览、博客、项目、工具管理列表，以及新建、编辑、草稿、发布、取消发布、删除能力。
+- `tags`、`tech_stack`、`features`、`future_plan` 使用 textarea 输入，并在保存时转换为数组字段。
+- `supabase/schema.sql` 提供 `posts`、`projects`、`tools` 建表 SQL、RLS policy 和 `updated_at` 自动更新时间 trigger。
+- `.env.example` 与 `docs/SUPABASE_SETUP.md` 提供环境变量、SQL 执行、Vercel 配置和首个站主账号创建说明。
+
+未自动完成范围：
+
+- Supabase 项目创建需要站主手动完成。
+- `supabase/schema.sql` 需要站主在 Supabase SQL Editor 中执行。
+- 本地 `.env.local` 与 Vercel 环境变量需要站主手动配置。
+- 首个站主账号需要站主在 Supabase Auth 中创建。
+- 配置真实 Supabase 后，需要再次进行线上 CRUD 与 published-only 前台展示验收。

@@ -84,6 +84,15 @@ test('horizontal rails support wheel-assisted horizontal scroll', async ({ page 
   await expect.poll(async () => rail.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
 });
 
+test('studio login degrades gracefully without Supabase env vars', async ({ page }) => {
+  await page.goto('/studio/login');
+  await expect(page.getByRole('heading', { name: 'Supabase 未配置' })).toBeVisible();
+
+  await page.goto('/studio');
+  await expect(page).toHaveURL(/\/studio\/login$/);
+  await expect(page.getByRole('heading', { name: 'Supabase 未配置' })).toBeVisible();
+});
+
 test('mobile navigation uses a compact menu and layout stays within viewport', async ({ page }) => {
   for (const width of [390, 430, 768]) {
     await page.setViewportSize({ width, height: 844 });

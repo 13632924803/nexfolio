@@ -7,6 +7,7 @@ const navItems = [
   { to: '/projects', label: '项目' },
   { to: '/blog', label: '博客' },
   { to: '/tools', label: '工具' },
+  { to: '/roleplay', label: '酒馆' },
   { to: '/about', label: '关于' },
 ];
 
@@ -61,7 +62,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div>
           <strong>{site.shortName}</strong>
           <p>{site.description}</p>
-          <span className="footer-version">{site.version} · Studio 入口预留，当前未开放后台</span>
+          <span className="footer-version">{site.version} · Studio 入口已预留，后台需配置 Supabase 后使用</span>
         </div>
         <div className="footer-links" aria-label="站点链接">
           <a href={site.contact.github} target="_blank" rel="noreferrer">

@@ -1,0 +1,935 @@
+/* ===== 角色酒馆 · 全局布局样式 ===== */
+
+/* ---------- CSS 变量继承与覆盖 ---------- */
+#roleplay-root {
+  --rp-bg: #f5f7fb;
+  --rp-surface: #ffffff;
+  --rp-card: rgba(255,255,255,0.82);
+  --rp-line: rgba(148,163,184,0.16);
+  --rp-text: #1e293b;
+  --rp-muted: #64748b;
+  --rp-accent: #7c3aed;
+  --rp-accent-soft: #ede9fe;
+  --rp-accent-hover: #6d28d9;
+  --rp-blue: #3b82f6;
+  --rp-blue-soft: #eff6ff;
+  --rp-rose: #f43f5e;
+  --rp-amber: #f59e0b;
+  --rp-green: #10b981;
+  --rp-shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --rp-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  --rp-shadow-lg: 0 12px 40px rgba(0,0,0,0.1);
+  --rp-radius-sm: 10px;
+  --rp-radius: 16px;
+  --rp-radius-lg: 22px;
+  --rp-transition: 0.2s ease;
+
+  font-family: 'PingFang SC','Microsoft YaHei','Noto Sans SC',system-ui,sans-serif;
+  color: var(--rp-text);
+  background: var(--rp-bg);
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+#roleplay-root *,
+#roleplay-root *::before,
+#roleplay-root *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#roleplay-root button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+#roleplay-root input,
+#roleplay-root textarea {
+  font: inherit;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+#roleplay-root a { color: inherit; text-decoration: none; }
+
+/* ---------- 桌面端三栏容器 ---------- */
+.tavern-desktop {
+  display: flex;
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* ---- 左侧栏 ---- */
+.tavern-left {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--rp-line);
+  background: var(--rp-surface);
+  overflow: hidden;
+}
+
+.tavern-left-header {
+  padding: 18px 16px 12px;
+  border-bottom: 1px solid var(--rp-line);
+}
+
+.tavern-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.tavern-brand-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  color: #fff;
+  font-weight: 900;
+  font-size: 1.1rem;
+}
+
+.tavern-brand h2 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--rp-text);
+}
+
+.tavern-brand span {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--rp-muted);
+}
+
+.tavern-left-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-new {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: background var(--rp-transition), transform var(--rp-transition);
+}
+
+.btn-new:active { transform: scale(0.97); }
+
+.btn-new.primary {
+  background: var(--rp-accent);
+  color: #fff;
+}
+
+.btn-new.secondary {
+  background: var(--rp-accent-soft);
+  color: var(--rp-accent);
+}
+
+.tavern-search {
+  padding: 10px 16px;
+}
+
+.tavern-search input {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--rp-line);
+  border-radius: 12px;
+  padding: 0 12px;
+  background: var(--rp-bg);
+  color: var(--rp-text);
+  font-size: 0.82rem;
+}
+
+.tavern-search input::placeholder { color: var(--rp-muted); }
+
+.tavern-left-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 10px;
+}
+
+.tavern-list-section {
+  margin-bottom: 14px;
+}
+
+.tavern-list-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px 4px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--rp-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.tavern-list-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background var(--rp-transition);
+}
+
+.tavern-list-item:hover { background: var(--rp-bg); }
+.tavern-list-item.active {
+  background: var(--rp-accent-soft);
+  color: var(--rp-accent);
+  font-weight: 700;
+}
+
+.tavern-list-item-avatar {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6366f1, #a5b4fc);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.tavern-list-item-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.tavern-list-item-meta strong {
+  display: block;
+  font-size: 0.83rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tavern-list-item-meta span {
+  font-size: 0.7rem;
+  color: var(--rp-muted);
+}
+
+.tavern-list-badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  background: var(--rp-accent-soft);
+  color: var(--rp-accent);
+}
+
+.tavern-left-footer {
+  padding: 10px 16px;
+  border-top: 1px solid var(--rp-line);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tavern-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: var(--rp-muted);
+}
+
+.tavern-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tavern-status-dot.on { background: var(--rp-green); box-shadow: 0 0 0 3px rgba(16,185,129,0.15); }
+.tavern-status-dot.off { background: var(--rp-muted); }
+
+/* ---- 中间主聊天区 ---- */
+.tavern-center {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--rp-bg);
+}
+
+.tavern-topnav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--rp-line);
+  background: var(--rp-surface);
+  overflow-x: auto;
+}
+
+.tavern-topnav button {
+  flex-shrink: 0;
+  min-height: 34px;
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--rp-muted);
+  transition: all var(--rp-transition);
+}
+
+.tavern-topnav button:hover { background: var(--rp-bg); color: var(--rp-text); }
+.tavern-topnav button.active {
+  background: var(--rp-accent-soft);
+  color: var(--rp-accent);
+}
+
+.tavern-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--rp-line);
+  background: var(--rp-surface);
+}
+
+.tavern-chat-header-avatar {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6366f1, #a5b4fc);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.tavern-chat-header-info { flex: 1; min-width: 0; }
+.tavern-chat-header-info strong {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.tavern-chat-header-info span {
+  font-size: 0.73rem;
+  color: var(--rp-muted);
+}
+
+.tavern-chat-header-tags {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.tavern-tag {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: var(--rp-accent-soft);
+  color: var(--rp-accent);
+}
+
+.tavern-tag.scene {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+/* ---- 消息区 ---- */
+.tavern-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tavern-message-bubble {
+  max-width: 76%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 0.88rem;
+  line-height: 1.72;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.tavern-message-bubble.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+  color: #fff;
+  border-bottom-right-radius: 6px;
+}
+
+.tavern-message-bubble.assistant {
+  align-self: flex-start;
+  background: var(--rp-surface);
+  border: 1px solid var(--rp-line);
+  color: var(--rp-text);
+  border-bottom-left-radius: 6px;
+  box-shadow: var(--rp-shadow-sm);
+}
+
+.tavern-message-bubble.system {
+  align-self: center;
+  max-width: 88%;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  color: var(--rp-muted);
+  background: rgba(148,163,184,0.08);
+  text-align: center;
+}
+
+.tavern-message-time {
+  font-size: 0.65rem;
+  color: var(--rp-muted);
+  margin-top: 4px;
+  padding: 0 4px;
+}
+
+.tavern-message-time.user { text-align: right; }
+
+/* ---- 输入区 ---- */
+.tavern-input-area {
+  padding: 10px 18px 14px;
+  border-top: 1px solid var(--rp-line);
+  background: var(--rp-surface);
+}
+
+.tavern-input-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.tavern-input-row textarea {
+  flex: 1;
+  min-height: 44px;
+  max-height: 140px;
+  resize: none;
+  border: 1px solid var(--rp-line);
+  border-radius: 16px;
+  padding: 10px 14px;
+  background: var(--rp-bg);
+  color: var(--rp-text);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.tavern-input-row textarea::placeholder { color: var(--rp-muted); }
+.tavern-input-row textarea:focus { border-color: var(--rp-accent); }
+
+.tavern-input-tools {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.tavern-input-tools button {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--rp-muted);
+  font-size: 0.85rem;
+  transition: all var(--rp-transition);
+}
+
+.tavern-input-tools button:hover {
+  background: var(--rp-bg);
+  color: var(--rp-accent);
+}
+
+.btn-send {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--rp-accent);
+  color: #fff;
+  font-size: 1.1rem;
+  transition: all var(--rp-transition);
+}
+
+.btn-send:hover { background: var(--rp-accent-hover); }
+.btn-send:active { transform: scale(0.95); }
+
+/* ---- 底部状态栏 ---- */
+.tavern-statusbar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 8px 18px;
+  border-top: 1px solid var(--rp-line);
+  background: var(--rp-surface);
+  font-size: 0.7rem;
+  color: var(--rp-muted);
+  overflow-x: auto;
+}
+
+.tavern-statusbar-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.tavern-statusbar-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.tavern-statusbar-dot.saved { background: var(--rp-green); }
+.tavern-statusbar-dot.connecting { background: var(--rp-amber); }
+
+/* ---- 右侧面板 ---- */
+.tavern-right {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--rp-line);
+  background: var(--rp-surface);
+  overflow: hidden;
+}
+
+.tavern-right-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--rp-line);
+  padding: 0 8px;
+  overflow-x: auto;
+}
+
+.tavern-right-tabs button {
+  flex-shrink: 0;
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--rp-muted);
+  border-bottom: 2px solid transparent;
+  transition: all var(--rp-transition);
+}
+
+.tavern-right-tabs button.active {
+  color: var(--rp-accent);
+  border-bottom-color: var(--rp-accent);
+}
+
+.tavern-right-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tavern-info-card {
+  padding: 14px;
+  border: 1px solid var(--rp-line);
+  border-radius: var(--rp-radius);
+  background: var(--rp-bg);
+}
+
+.tavern-info-card h4 {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--rp-text);
+  margin-bottom: 8px;
+}
+
+.tavern-info-card p {
+  font-size: 0.78rem;
+  color: var(--rp-muted);
+  line-height: 1.65;
+}
+
+.tavern-info-card .field-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  font-size: 0.76rem;
+}
+
+.tavern-info-card .field-row .label { color: var(--rp-muted); }
+.tavern-info-card .field-row .value { color: var(--rp-text); font-weight: 700; }
+
+.tavern-info-card .field-row + .field-row { border-top: 1px solid var(--rp-line); }
+
+/* ---- 移动端布局 ---- */
+.tavern-mobile {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--rp-bg);
+}
+
+/* 移动端顶部栏 */
+.tavern-mobile-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--rp-surface);
+  border-bottom: 1px solid var(--rp-line);
+  flex-shrink: 0;
+}
+
+.tavern-mobile-topbar .brand-icon {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.tavern-mobile-topbar h2 {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 800;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tavern-mobile-topbar button {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--rp-bg);
+  color: var(--rp-muted);
+  font-size: 1rem;
+}
+
+/* 移动端会话/角色信息条 */
+.tavern-mobile-session-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: var(--rp-surface);
+  border-bottom: 1px solid var(--rp-line);
+  flex-shrink: 0;
+}
+
+.tavern-mobile-session-bar .char-avatar {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6366f1, #a5b4fc);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.tavern-mobile-session-bar .session-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.tavern-mobile-session-bar .session-info strong {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tavern-mobile-session-bar .session-info span {
+  font-size: 0.68rem;
+  color: var(--rp-muted);
+}
+
+/* 移动端消息区 */
+.tavern-mobile-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tavern-mobile-messages .tavern-message-bubble {
+  max-width: 84%;
+  font-size: 0.85rem;
+  padding: 10px 14px;
+  border-radius: 16px;
+  line-height: 1.68;
+}
+
+/* 移动端上下文卡片区 */
+.tavern-mobile-cards {
+  display: flex;
+  gap: 8px;
+  padding: 8px 14px;
+  overflow-x: auto;
+  flex-shrink: 0;
+  scrollbar-width: none;
+}
+
+.tavern-mobile-cards::-webkit-scrollbar { display: none; }
+
+.tavern-mobile-card {
+  flex-shrink: 0;
+  width: 180px;
+  padding: 12px;
+  border: 1px solid var(--rp-line);
+  border-radius: var(--rp-radius-sm);
+  background: var(--rp-surface);
+}
+
+.tavern-mobile-card h4 {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--rp-muted);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tavern-mobile-card p {
+  font-size: 0.75rem;
+  color: var(--rp-text);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 移动端快捷入口 */
+.tavern-mobile-shortcuts {
+  display: flex;
+  gap: 6px;
+  padding: 6px 14px;
+  overflow-x: auto;
+  flex-shrink: 0;
+  scrollbar-width: none;
+}
+
+.tavern-mobile-shortcuts::-webkit-scrollbar { display: none; }
+
+.tavern-mobile-shortcut {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: var(--rp-accent-soft);
+  color: var(--rp-accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* 移动端输入区 */
+.tavern-mobile-input {
+  padding: 8px 14px;
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--rp-line);
+  background: var(--rp-surface);
+  flex-shrink: 0;
+}
+
+.tavern-mobile-input-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.tavern-mobile-input-row .input-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  border: 1px solid var(--rp-line);
+  border-radius: 20px;
+  background: var(--rp-bg);
+  padding: 6px 6px 6px 14px;
+}
+
+.tavern-mobile-input-row textarea {
+  flex: 1;
+  min-height: 36px;
+  max-height: 100px;
+  resize: none;
+  color: var(--rp-text);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  padding: 0;
+}
+
+.tavern-mobile-input-row textarea::placeholder { color: var(--rp-muted); }
+
+.tavern-mobile-input-row .input-tools {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.tavern-mobile-input-row .input-tools button {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--rp-muted);
+  font-size: 0.8rem;
+}
+
+.tavern-mobile-send {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--rp-accent);
+  color: #fff;
+  font-size: 1rem;
+  transition: all var(--rp-transition);
+}
+
+.tavern-mobile-send:active { transform: scale(0.92); }
+
+/* ---- 移动端底部导航 ---- */
+.tavern-mobile-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 6px 0;
+  padding-bottom: max(6px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--rp-line);
+  background: var(--rp-surface);
+  flex-shrink: 0;
+}
+
+.tavern-mobile-nav button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--rp-muted);
+  transition: all var(--rp-transition);
+}
+
+.tavern-mobile-nav button .nav-icon {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  font-size: 1.1rem;
+}
+
+.tavern-mobile-nav button.active {
+  color: var(--rp-accent);
+}
+
+/* ---- 移动端抽屉/面板 ---- */
+.tavern-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(15,23,42,0.3);
+  backdrop-filter: blur(4px);
+}
+
+.tavern-drawer {
+  position: fixed;
+  z-index: 51;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 74vh;
+  overflow-y: auto;
+  background: var(--rp-surface);
+  border-radius: 22px 22px 0 0;
+  padding: 8px 14px 20px;
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.12);
+}
+
+.tavern-drawer-handle {
+  width: 36px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--rp-line);
+  margin: 6px auto 12px;
+}
+
+.tavern-drawer h4 {
+  font-size: 0.85rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+/* 响应式切换 */
+@media (min-width: 901px) {
+  .tavern-mobile { display: none; }
+}
+
+@media (max-width: 900px) {
+  .tavern-desktop { display: none; }
+}
+
+/* 右侧面板滚动条 */
+.tavern-right-content::-webkit-scrollbar,
+.tavern-left-list::-webkit-scrollbar,
+.tavern-messages::-webkit-scrollbar,
+.tavern-mobile-messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+.tavern-right-content::-webkit-scrollbar-thumb,
+.tavern-left-list::-webkit-scrollbar-thumb,
+.tavern-messages::-webkit-scrollbar-thumb,
+.tavern-mobile-messages::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(148,163,184,0.25);
+}

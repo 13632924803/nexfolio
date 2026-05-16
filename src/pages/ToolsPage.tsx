@@ -5,15 +5,18 @@ import { FilterPills } from '../components/ui/FilterPills';
 import { MotionPage } from '../components/ui/MotionPage';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { toolCategories } from '../data/categories';
-import { tools } from '../data/tools';
+import { tools as localTools } from '../data/tools';
 import type { ToolCategory } from '../data/types';
+import { useAsyncData } from '../hooks/useAsyncData';
+import { getPublishedTools } from '../lib/contentRepository';
 
 export function ToolsPage() {
   const [category, setCategory] = useState<ToolCategory | '全部'>('全部');
+  const { data: tools, error, loading } = useAsyncData(getPublishedTools, localTools, []);
 
   const filteredTools = useMemo(
     () => tools.filter((tool) => category === '全部' || tool.category === category),
-    [category],
+    [category, tools],
   );
 
   return (
@@ -24,6 +27,8 @@ export function ToolsPage() {
           title="工具入口"
           description="区分自研工具和常用资源。没有真实访问地址的工具只展示计划，不跳转到假链接。"
         />
+        {loading ? <p className="data-note">正在读取工具内容...</p> : null}
+        {error ? <p className="data-note">{error}</p> : null}
       </section>
       <section className="page-section compact-section">
         <div className="tool-summary">

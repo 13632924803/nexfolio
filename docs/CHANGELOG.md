@@ -4,6 +4,40 @@
 
 ---
 
+## 2026-05-16：完成第二阶段 Supabase Studio 轻后台
+
+### 新增
+
+- 安装并接入 `@supabase/supabase-js`，通过 `VITE_SUPABASE_URL` 和 `VITE_SUPABASE_ANON_KEY` 读取配置。
+- 新增统一内容访问层，前台项目、博客、工具优先读取 Supabase 已发布内容，未配置、请求失败或数据为空时自动回退本地数据。
+- 新增 `/studio/login`、`/studio`、`/studio/posts`、`/studio/projects`、`/studio/tools` 及新建/编辑路由。
+- 新增 Supabase Auth 邮箱密码登录、受保护 Studio 路由、登出和未配置提示。
+- 新增博客、项目、工具的轻量 CRUD 表单，支持草稿、发布、取消发布和删除。
+- 新增 `supabase/schema.sql`，包含 `posts`、`projects`、`tools` 表、更新时间 trigger、RLS policy 和后期迁移字段。
+- 新增 `.env.example` 和 `docs/SUPABASE_SETUP.md`，说明本地、Vercel、SQL、RLS 和首个站主账号配置方式。
+- 新增列表字段转换、fallback 数据访问、Studio 未配置降级和 Playwright Studio 登录页测试。
+
+### 优化
+
+- 首页、项目页、项目详情页、博客页、博客详情页、工具页改为异步读取内容，并保持本地 fallback 体验。
+- Studio 后台沿用 NexFolio 蓝白极简玻璃风格，桌面和移动端均可使用。
+- 保留第一阶段 Vercel rewrite、SEO 文件、横向 rail、404、空状态和 Footer 优化。
+
+### 验证
+
+- `npm run lint`：通过。
+- `npm run test`：通过。
+- `npm run build`：通过。
+- `npm run test:ui`：通过，Playwright 覆盖前台核心路径、横向 rail、移动端导航和 Studio 未配置降级。
+
+### 保留
+
+- 仍需站主手动创建 Supabase 项目、执行 `supabase/schema.sql`、配置本地与 Vercel 环境变量。
+- 不在前端暴露 `service_role` key。
+- 当前阶段不拆分子站，不做评论、多用户、支付、Storage、Realtime 或 Edge Function。
+
+---
+
 ## 2026-05-16：完成第一阶段线上补丁与第一版体验优化
 
 ### 新增

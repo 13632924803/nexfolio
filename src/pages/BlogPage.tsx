@@ -5,12 +5,15 @@ import { FilterPills } from '../components/ui/FilterPills';
 import { MotionPage } from '../components/ui/MotionPage';
 import { SectionHeading } from '../components/ui/SectionHeading';
 import { blogCategories } from '../data/categories';
-import { posts } from '../data/posts';
+import { posts as localPosts } from '../data/posts';
 import type { BlogCategory } from '../data/types';
+import { useAsyncData } from '../hooks/useAsyncData';
+import { getPublishedPosts } from '../lib/contentRepository';
 
 export function BlogPage() {
   const [category, setCategory] = useState<BlogCategory | '全部'>('全部');
   const [query, setQuery] = useState('');
+  const { data: posts, error, loading } = useAsyncData(getPublishedPosts, localPosts, []);
 
   const filteredPosts = useMemo(() => {
     const keyword = query.trim().toLowerCase();
@@ -22,7 +25,7 @@ export function BlogPage() {
         post.summary.toLowerCase().includes(keyword);
       return matchesCategory && matchesQuery;
     });
-  }, [category, query]);
+  }, [category, posts, query]);
 
   return (
     <MotionPage>
@@ -32,6 +35,8 @@ export function BlogPage() {
           title="博客记录"
           description="开发记录、项目复盘、学习笔记和个人数字平台的持续建设过程。"
         />
+        {loading ? <p className="data-note">正在读取博客内容...</p> : null}
+        {error ? <p className="data-note">{error}</p> : null}
       </section>
       <section className="page-section compact-section">
         <div className="search-row">

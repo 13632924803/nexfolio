@@ -304,3 +304,51 @@ npm install 报告依赖审计漏洞；当前未执行强制修复，以保持 N
 ```text
 第一阶段线上补丁本地验收通过；线上正式验收待 Vercel 重新部署后复验。Supabase 后台仍属于下一阶段，尚未开始实现。
 ```
+
+## 18. 第二阶段 Supabase Studio 本地验收
+
+- [x] 未配置 Supabase 时，首页、项目页、博客页、工具页继续显示本地数据。
+- [x] 未配置 Supabase 时，项目详情页和博客详情页继续显示本地详情。
+- [x] `/studio/login` 可访问。
+- [x] 未配置 Supabase 时，`/studio/login` 显示清晰配置提示，不白屏。
+- [x] 未登录访问 `/studio` 会跳转到 `/studio/login`。
+- [x] Studio 路由已包含概览、博客、项目、工具列表和新建/编辑页面。
+- [x] Studio 表单支持草稿、发布、取消发布、删除。
+- [x] 前台读取层只查询 `is_published = true` 的内容。
+- [x] `draft` 内容不会通过公开读取层主动请求。
+- [x] `supabase/schema.sql` 已包含 `posts`、`projects`、`tools` 三张表。
+- [x] SQL 已启用 RLS。
+- [x] SQL 已限制匿名访客只能读取已发布内容。
+- [x] SQL 已限制 authenticated 用户只能管理 `owner_id = auth.uid()` 的内容。
+- [x] Supabase URL 和 anon key 使用环境变量。
+- [x] `service_role` key 不进入前端代码或 `.env.example`。
+- [x] `.env.example` 已提供。
+- [x] `docs/SUPABASE_SETUP.md` 已提供人工配置步骤。
+- [x] `npm run lint` 通过。
+- [x] `npm run test` 通过。
+- [x] `npm run build` 通过。
+- [x] `npm run test:ui` 通过，移动端跳过桌面滚轮专项测试属于预期。
+- [ ] 配置真实 Supabase 项目后，站主登录和真实 CRUD 需要线上复验。
+
+问题记录：
+
+```text
+第二阶段代码已完成本地未配置降级、前台 fallback、Studio 路由和 SQL/RLS 脚本。真实 Supabase 项目、环境变量、首个站主账号仍需人工配置；配置前 Studio 只能显示未配置提示，前台继续使用本地数据。
+```
+
+## 19. 第二阶段验收方式
+
+- 未配置 Supabase：访问 `/`、`/projects`、`/projects/nexfolio`、`/blog`、`/blog/testing-from-day-one`、`/tools` 应正常显示本地内容。
+- 未配置 Supabase：访问 `/studio/login` 应显示 Supabase 未配置提示。
+- 未配置 Supabase：访问 `/studio` 应跳转 `/studio/login`。
+- 配置 Supabase 后：站主可使用邮箱密码登录 `/studio/login`。
+- 配置 Supabase 后：可创建博客、项目、工具草稿。
+- 配置 Supabase 后：可发布内容，前台只显示已发布内容。
+- 配置 Supabase 后：取消发布的内容不出现在前台。
+- 配置 Supabase 后：深层路由、SEO 文件、横向 rail、移动端导航仍保持第一阶段表现。
+
+验收状态：
+
+```text
+第二阶段本地代码与未配置降级验收通过；真实 Supabase 后台需要站主完成环境变量、SQL 和账号配置后继续线上验收。
+```

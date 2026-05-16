@@ -212,3 +212,30 @@
 - [ ] 预留 `blog.nexfolio.com`、`projects.nexfolio.com`、`tools.nexfolio.com` 等子域名结构。
 - [ ] 预留主站精选预览 + 子站完整内容的产品结构。
 - [ ] 后期拆分前评估内容规模，不一次性拆全部模块。
+
+## 17. 第二阶段 Supabase Studio 实现记录
+
+- [x] 安装并配置 `@supabase/supabase-js`。
+- [x] 新增 `.env.example`，声明 `VITE_SUPABASE_URL` 与 `VITE_SUPABASE_ANON_KEY`。
+- [x] 新增 `src/lib/supabase.ts`，环境变量缺失时不创建客户端并返回清晰提示。
+- [x] 新增统一内容访问层：`getPublishedPosts`、`getPublishedPostBySlug`、`getPublishedProjects`、`getPublishedProjectBySlug`、`getPublishedTools`。
+- [x] 前台首页、项目页、项目详情页、博客页、博客详情页、工具页优先读取 Supabase published 内容。
+- [x] Supabase 未配置、请求失败或数据为空时，前台自动回退本地 TypeScript 数据。
+- [x] 新增 loading / error / empty 基础状态，不因 Supabase 缺失白屏。
+- [x] 新增 `/studio/login`，未配置 Supabase 时显示明确提示。
+- [x] 新增受保护 `/studio` 后台路由，未登录访问会跳转登录页。
+- [x] 新增 Studio 概览、博客列表、项目列表、工具列表。
+- [x] 新增博客、项目、工具新建与编辑表单。
+- [x] 支持保存草稿、发布、取消发布、删除。
+- [x] 支持 tags、tech_stack、features、future_plan 文本输入并转换为数组。
+- [x] 发布时写入 `is_published = true`，并在 `published_at` 为空时写入当前时间。
+- [x] 新增 `supabase/schema.sql`，包含 `posts`、`projects`、`tools` 表、RLS policy 和更新时间 trigger。
+- [x] SQL 预留 `canonical_url`、`redirect_from`、SEO、排序和精选字段。
+- [x] 新增 `docs/SUPABASE_SETUP.md`，说明 Supabase 项目、SQL、环境变量、Vercel 和站主账号配置。
+- [x] 新增 Vitest 测试：列表字段转换、fallback 数据逻辑、Studio 未配置登录提示。
+- [x] 新增 Playwright 测试：`/studio/login` 未配置提示与 `/studio` 跳转登录。
+- [ ] 手动创建 Supabase 项目。
+- [ ] 手动执行 `supabase/schema.sql`。
+- [ ] 手动配置本地 `.env.local` 与 Vercel 环境变量。
+- [ ] 手动创建第一个站主账号。
+- [ ] 配置 Supabase 后进行真实 CRUD 线上验收。

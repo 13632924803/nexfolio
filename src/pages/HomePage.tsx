@@ -6,12 +6,19 @@ import { HorizontalRail } from '../components/sections/HorizontalRail';
 import { MotionPage } from '../components/ui/MotionPage';
 import { MotionSection } from '../components/ui/MotionSection';
 import { SectionHeading } from '../components/ui/SectionHeading';
-import { featuredProjects } from '../data/projects';
-import { latestPosts } from '../data/posts';
+import { projects as localProjects } from '../data/projects';
+import { posts as localPosts } from '../data/posts';
 import { site } from '../data/site';
-import { tools } from '../data/tools';
+import { tools as localTools } from '../data/tools';
+import { useAsyncData } from '../hooks/useAsyncData';
+import { getPublishedPosts, getPublishedProjects, getPublishedTools } from '../lib/contentRepository';
 
 const entryCards = [
+  {
+    title: '角色酒馆',
+    text: '面向长篇角色扮演的 AI 酒馆系统，支持角色、世界书、记忆、提示词和多会话扩展。',
+    to: '/roleplay',
+  },
   { title: '项目作品', text: '查看正在构建和已经沉淀的数字产品。', to: '/projects' },
   { title: '博客记录', text: '阅读开发过程、学习笔记和项目复盘。', to: '/blog' },
   { title: '工具入口', text: '进入自研工具计划与常用外部资源。', to: '/tools' },
@@ -19,6 +26,10 @@ const entryCards = [
 ];
 
 export function HomePage() {
+  const { data: projects, loading: projectsLoading } = useAsyncData(getPublishedProjects, localProjects, []);
+  const { data: posts, loading: postsLoading } = useAsyncData(getPublishedPosts, localPosts, []);
+  const { data: tools, loading: toolsLoading } = useAsyncData(getPublishedTools, localTools, []);
+
   return (
     <MotionPage>
       <section className="hero page-section">
@@ -41,7 +52,7 @@ export function HomePage() {
             <strong>NexFolio</strong>
             <p>Projects · Blog · Tools</p>
           </div>
-          <div className="visual-card mini top">React + Vite</div>
+          <div className="visual-card mini top">Supabase Ready</div>
           <div className="visual-card mini bottom">Blue Glass UI</div>
         </div>
       </section>
@@ -61,19 +72,31 @@ export function HomePage() {
         <SectionHeading
           eyebrow="Projects"
           title="精选项目"
-          description="局部横向滑动展示重点作品，保留纵向主浏览节奏。"
+          description={
+            projectsLoading
+              ? '正在读取项目内容，未配置 Supabase 时会自动使用本地数据。'
+              : '局部横向滑动展示重点作品，保留纵向主浏览节奏。'
+          }
         />
         <HorizontalRail label="精选项目横向滑动">
-          {featuredProjects.map((project, index) => (
+          {projects.slice(0, 5).map((project, index) => (
             <ProjectCard project={project} featured={index === 0} key={project.id} />
           ))}
         </HorizontalRail>
       </MotionSection>
 
       <MotionSection className="page-section">
-        <SectionHeading eyebrow="Blog" title="最新博客" description="记录开发过程、项目复盘和学习笔记。" />
+        <SectionHeading
+          eyebrow="Blog"
+          title="最新博客"
+          description={
+            postsLoading
+              ? '正在读取博客内容，未配置 Supabase 时会自动使用本地数据。'
+              : '记录开发过程、项目复盘和学习笔记。'
+          }
+        />
         <HorizontalRail label="最新博客横向滑动">
-          {latestPosts.map((post) => (
+          {posts.slice(0, 3).map((post) => (
             <BlogCard post={post} key={post.id} />
           ))}
         </HorizontalRail>
@@ -83,7 +106,11 @@ export function HomePage() {
         <SectionHeading
           eyebrow="Tools"
           title="常用工具入口"
-          description="自研工具计划与常用资源统一收纳，避免跳转到无意义占位地址。"
+          description={
+            toolsLoading
+              ? '正在读取工具内容，未配置 Supabase 时会自动使用本地数据。'
+              : '自研工具计划与常用资源统一收纳，避免跳转到无意义占位地址。'
+          }
         />
         <HorizontalRail label="工具横向滑动">
           {tools.slice(0, 5).map((tool) => (

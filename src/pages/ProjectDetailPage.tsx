@@ -1,17 +1,39 @@
 import { Link, useParams } from 'react-router-dom';
 import { EmptyState } from '../components/ui/EmptyState';
 import { MotionPage } from '../components/ui/MotionPage';
-import { projects } from '../data/projects';
+import { projects as localProjects } from '../data/projects';
+import { useAsyncData } from '../hooks/useAsyncData';
+import { getPublishedProjectBySlug } from '../lib/contentRepository';
 
 export function ProjectDetailPage() {
-  const { id } = useParams();
-  const project = projects.find((item) => item.id === id);
+  const { id = '' } = useParams();
+  const fallback = localProjects.find((item) => item.id === id);
+  const { data: project, loading } = useAsyncData(
+    () => getPublishedProjectBySlug(id),
+    fallback,
+    [id],
+  );
+
+  if (!project && !loading) {
+    return (
+      <MotionPage>
+        <section className="page-section">
+          <EmptyState
+            title="项目不存在"
+            description="这个项目可能还没有发布，或链接已经调整。"
+            actionLabel="返回项目列表"
+            actionTo="/projects"
+          />
+        </section>
+      </MotionPage>
+    );
+  }
 
   if (!project) {
     return (
       <MotionPage>
         <section className="page-section">
-          <EmptyState title="项目不存在" description="这个项目可能还没有发布，或链接已经调整。" actionLabel="返回项目列表" actionTo="/projects" />
+          <EmptyState title="正在读取项目" description="正在加载项目详情，未配置 Supabase 时会自动使用本地数据。" />
         </section>
       </MotionPage>
     );
