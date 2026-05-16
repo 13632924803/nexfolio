@@ -2,6 +2,24 @@ import type { ProjectItem } from './types';
 
 export const projects: ProjectItem[] = [
   {
+    id: 'ai-roleplay-tavern',
+    title: 'AI Roleplay Tavern',
+    description: '面向长篇角色扮演的 AI 酒馆系统，支持角色、世界书、记忆、提示词和多会话扩展。',
+    type: '独立子站',
+    status: '开发中',
+    tags: ['AI', '角色扮演', '酒馆', 'React'],
+    techStack: ['React', 'TypeScript', 'Vite'],
+    cover: 'AI 角色酒馆界面',
+    background: '角色扮演场景需要独立的布局系统、状态管理和上下文扩展能力，不适合内嵌在其他页面中。',
+    reason: '将角色酒馆剥离为独立子站，获得自己的技术栈、部署节奏和视觉体系。',
+    problem: '内嵌在主站中会与站点导航、样式和路由策略产生冲突，且前端复杂度会随功能叠加快速增长。',
+    solution: '独立 Vite + React 项目，自建项目结构，后续可按需接入后端 API 和模型调用。',
+    detail: 'AI Roleplay Tavern 是一个独立运行的 Web 应用，提供桌面端三栏布局和移动端适配的酒馆式角色扮演界面。',
+    features: ['角色卡管理', '世界书系统', '记忆摘要', '提示词模板', '多会话切换', '响应式布局'],
+    linkStatus: '暂未上线，独立子站已完成第一阶段框架搭建。',
+    futurePlan: ['接入真实 AI 模型 API', '世界书自动注入上下文', '长期记忆压缩策略', '数据导入导出'],
+  },
+  {
     id: 'nexfolio',
     title: 'NexFolio 个人数字平台',
     description: '聚合项目、文章、工具与个人方向的主站入口，作为后续数字产品的总导航。',

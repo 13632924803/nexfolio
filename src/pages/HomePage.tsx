@@ -14,11 +14,6 @@ import { useAsyncData } from '../hooks/useAsyncData';
 import { getPublishedPosts, getPublishedProjects, getPublishedTools } from '../lib/contentRepository';
 
 const entryCards = [
-  {
-    title: '角色酒馆',
-    text: '面向长篇角色扮演的 AI 酒馆系统，支持角色、世界书、记忆、提示词和多会话扩展。',
-    to: '/roleplay',
-  },
   { title: '项目作品', text: '查看正在构建和已经沉淀的数字产品。', to: '/projects' },
   { title: '博客记录', text: '阅读开发过程、学习笔记和项目复盘。', to: '/blog' },
   { title: '工具入口', text: '进入自研工具计划与常用外部资源。', to: '/tools' },

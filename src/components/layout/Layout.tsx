@@ -7,7 +7,6 @@ const navItems = [
   { to: '/projects', label: '项目' },
   { to: '/blog', label: '博客' },
   { to: '/tools', label: '工具' },
-  { to: '/roleplay', label: '酒馆' },
   { to: '/about', label: '关于' },
 ];
 

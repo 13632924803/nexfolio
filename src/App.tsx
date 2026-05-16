@@ -1,7 +1,6 @@
 import { AnimatePresence } from 'framer-motion';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
-import { RoleplayPage } from './features/roleplay/pages/RoleplayPage';
 import { AboutPage } from './pages/AboutPage';
 import { BlogDetailPage } from './pages/BlogDetailPage';
 import { BlogPage } from './pages/BlogPage';
@@ -20,10 +19,6 @@ import { StudioLoginPage } from './studio/pages/StudioLoginPage';
 
 export default function App() {
   const location = useLocation();
-
-  if (location.pathname.startsWith('/roleplay')) {
-    return <RoleplayPage />;
-  }
 
   if (location.pathname.startsWith('/studio')) {
     return (

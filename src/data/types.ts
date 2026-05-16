@@ -4,7 +4,8 @@ export type ProjectType =
   | '微信小程序'
   | 'AI 应用'
   | '自动化工具'
-  | '实验项目';
+  | '实验项目'
+  | '独立子站';
 
 export type ProjectStatus = '开发中' | '已上线' | '计划中' | '维护中' | '已暂停';
 
